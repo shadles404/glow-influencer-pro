@@ -14,16 +14,241 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          created_at: string
+          id: string
+          monthly_budget: number
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          monthly_budget?: number
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          monthly_budget?: number
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      expenses: {
+        Row: {
+          amount: number
+          category_id: string | null
+          created_at: string
+          description: string
+          expense_date: string
+          id: string
+        }
+        Insert: {
+          amount: number
+          category_id?: string | null
+          created_at?: string
+          description: string
+          expense_date?: string
+          id?: string
+        }
+        Update: {
+          amount?: number
+          category_id?: string | null
+          created_at?: string
+          description?: string
+          expense_date?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expenses_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      influencers: {
+        Row: {
+          category_id: string | null
+          created_at: string
+          full_name: string
+          id: string
+          monthly_salary: number
+          phone: string | null
+          priority: Database["public"]["Enums"]["priority_type"]
+          product: string | null
+          status: Database["public"]["Enums"]["influencer_status"]
+          updated_at: string
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string
+          full_name: string
+          id?: string
+          monthly_salary?: number
+          phone?: string | null
+          priority?: Database["public"]["Enums"]["priority_type"]
+          product?: string | null
+          status?: Database["public"]["Enums"]["influencer_status"]
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string
+          full_name?: string
+          id?: string
+          monthly_salary?: number
+          phone?: string | null
+          priority?: Database["public"]["Enums"]["priority_type"]
+          product?: string | null
+          status?: Database["public"]["Enums"]["influencer_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "influencers_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monthly_targets: {
+        Row: {
+          completed_videos: number
+          created_at: string
+          id: string
+          influencer_id: string
+          period: string
+          target_videos: number
+          updated_at: string
+        }
+        Insert: {
+          completed_videos?: number
+          created_at?: string
+          id?: string
+          influencer_id: string
+          period: string
+          target_videos?: number
+          updated_at?: string
+        }
+        Update: {
+          completed_videos?: number
+          created_at?: string
+          id?: string
+          influencer_id?: string
+          period?: string
+          target_videos?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monthly_targets_influencer_id_fkey"
+            columns: ["influencer_id"]
+            isOneToOne: false
+            referencedRelation: "influencers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          id: string
+          influencer_id: string
+          notes: string | null
+          paid_at: string
+          period: string
+        }
+        Insert: {
+          amount: number
+          id?: string
+          influencer_id: string
+          notes?: string | null
+          paid_at?: string
+          period: string
+        }
+        Update: {
+          amount?: number
+          id?: string
+          influencer_id?: string
+          notes?: string | null
+          paid_at?: string
+          period?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_influencer_id_fkey"
+            columns: ["influencer_id"]
+            isOneToOne: false
+            referencedRelation: "influencers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      influencer_status: "active" | "inactive"
+      priority_type: "important" | "second_important" | "third_important"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +375,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      influencer_status: ["active", "inactive"],
+      priority_type: ["important", "second_important", "third_important"],
+    },
   },
 } as const
