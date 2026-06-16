@@ -78,8 +78,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Velocity — Influencer & Budget Management" },
+      { title: "Balaala Marketing System" },
       { name: "description", content: "Admin dashboard to manage influencers, video targets, marketing budgets, expenses, and automatic salary payouts." },
+      { property: "og:title", content: "Balaala Marketing System" },
+      { name: "twitter:title", content: "Balaala Marketing System" },
+      { property: "og:description", content: "Admin dashboard to manage influencers, video targets, marketing budgets, expenses, and automatic salary payouts." },
+      { name: "twitter:description", content: "Admin dashboard to manage influencers, video targets, marketing budgets, expenses, and automatic salary payouts." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/08841c7f-7bfa-4c08-929b-28b42e5f5c3b/id-preview-8441c412--bffea189-8a16-4893-b5d3-22c50c00c0af.lovable.app-1781626782942.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/08841c7f-7bfa-4c08-929b-28b42e5f5c3b/id-preview-8441c412--bffea189-8a16-4893-b5d3-22c50c00c0af.lovable.app-1781626782942.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:type", content: "website" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
